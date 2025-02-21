@@ -9,15 +9,15 @@
 
 void UPlayerHUD::ShowNoWeapon()
 {
-
+	AmmoCounterWidget->Hide();
 }
 
 void UPlayerHUD::ShowAll()
 {
-
+	AmmoCounterWidget->Show();
 }
 
 void UPlayerHUD::Hide()
 {
-
+	AmmoCounterWidget->Hide();
 }

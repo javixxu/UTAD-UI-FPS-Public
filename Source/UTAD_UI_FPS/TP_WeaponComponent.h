@@ -8,6 +8,9 @@
 
 class AUTAD_UI_FPSCharacter;
 
+DECLARE_DELEGATE_OneParam(FOnCurrentNumBulletsChanged, int/*current num bullets*/);
+
+
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UTAD_UI_FPS_API UTP_WeaponComponent : public USkeletalMeshComponent
 {
@@ -49,6 +52,8 @@ public:
 	/** Number of bullets currently in the weapon */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	int CurrentNumBullets = 0;
+
+	FOnCurrentNumBulletsChanged OnCurrentNumBulletsChanged;
 
 	/** Sets default values for this component's properties */
 	UTP_WeaponComponent();

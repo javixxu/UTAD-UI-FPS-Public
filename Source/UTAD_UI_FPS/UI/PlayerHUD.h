@@ -20,7 +20,8 @@ class UTAD_UI_FPS_API UPlayerHUD : public UUserWidget
 	GENERATED_BODY()
 	
 public:
-
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+		UAmmoCounter* AmmoCounterWidget;
 	/** Show the Minimap and the PlayerHealthBar */
 	UFUNCTION(BlueprintCallable, Category = Visibility)
 	void ShowNoWeapon();

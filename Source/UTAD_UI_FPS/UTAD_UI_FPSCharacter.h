@@ -17,6 +17,8 @@ struct FInputActionValue;
 
 class UPlayerHUD;
 
+DECLARE_DELEGATE_OneParam(FOnTotalNumBulletsChanged, int/*TOTAL num bullets*/);
+
 UCLASS(config=Game)
 class AUTAD_UI_FPSCharacter : public ACharacter
 {
@@ -45,7 +47,6 @@ class AUTAD_UI_FPSCharacter : public ACharacter
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
-
 	
 public:
 	AUTAD_UI_FPSCharacter();
@@ -70,6 +71,9 @@ public:
 	/** Counter for bullets in player (not in weapon) */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
 	int TotalBullets = 100;
+
+	/*DELEGADO DE TOTALBULLETS*/
+	FOnTotalNumBulletsChanged OnTotalNumBulletsChanged;
 
 	/** Bool for AnimBP to switch to another animation set */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)

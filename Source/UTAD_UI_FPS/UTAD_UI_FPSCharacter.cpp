@@ -152,6 +152,7 @@ bool AUTAD_UI_FPSCharacter::GetHasRifle()
 void AUTAD_UI_FPSCharacter::SetTotalBullets(int NewTotalBullets)
 {
 	TotalBullets = NewTotalBullets;
+	OnTotalNumBulletsChanged.ExecuteIfBound(TotalBullets);
 }
 
 int AUTAD_UI_FPSCharacter::GetTotalBullets()
@@ -162,6 +163,7 @@ int AUTAD_UI_FPSCharacter::GetTotalBullets()
 void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
 {
 	TotalBullets += Bullets;
+	OnTotalNumBulletsChanged.ExecuteIfBound(TotalBullets);
 }
 
 void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
