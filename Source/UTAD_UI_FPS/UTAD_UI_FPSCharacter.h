@@ -127,6 +127,9 @@ public:
 	
 	void SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent);
 
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void SetMovementSpeed(float NewSpeed);
+
 	/****************************************************/
 	/************************ UI ************************/
 	/****************************************************/

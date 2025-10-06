@@ -33,5 +33,11 @@ public:
 	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+	
+	UFUNCTION(BlueprintCallable)
+	void SetDamage(int NewDamage);
+	
+private:
+	int Damage = 0;
 };
 

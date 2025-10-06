@@ -98,13 +98,23 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetCurrentNumBullets(int NewCurrentNumBullets);
 
+	void SetDamage(int NewDamage);
+	
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	int GetDamage()const{return Damage;};
+	
 protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int  Damage = 40;
+	
 	/** Ends gameplay for this component. */
 	UFUNCTION()
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-
+	
 private:
 	/** The Character holding this weapon*/
+	UPROPERTY()
 	AUTAD_UI_FPSCharacter* Character;
 
 	float ReloadTimer;

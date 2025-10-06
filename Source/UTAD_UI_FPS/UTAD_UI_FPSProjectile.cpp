@@ -7,8 +7,6 @@
 #include "UTAD_UI_FPSCharacter.h"
 #include "UTAD_UI_FPS_Enemy.h"
 
-#define DAMAGE 15
-
 AUTAD_UI_FPSProjectile::AUTAD_UI_FPSProjectile() 
 {
 	// Use a sphere as a simple collision representation
@@ -50,7 +48,7 @@ void AUTAD_UI_FPSProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 		AUTAD_UI_FPSCharacter* Character = Cast<AUTAD_UI_FPSCharacter>(OtherActor);
 		if (IsValid(Character))
 		{
-			Character->SetHealth(Character->GetHealth() - DAMAGE);
+			Character->SetHealth(Character->GetHealth() - Damage);
 			Destroy();
 			return;
 		}
@@ -58,11 +56,16 @@ void AUTAD_UI_FPSProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherAc
 		AUTAD_UI_FPS_Enemy* Enemy = Cast<AUTAD_UI_FPS_Enemy>(OtherActor);
 		if (IsValid(Enemy))
 		{
-			Enemy->SetHealth(Enemy->GetHealth() - DAMAGE);
+			Enemy->SetHealth(Enemy->GetHealth() - Damage);
 			Destroy();
 			return;
 		}
 	}
 
 	Destroy();
+}
+
+void AUTAD_UI_FPSProjectile::SetDamage(int NewDamage)
+{
+	Damage = NewDamage;
 }

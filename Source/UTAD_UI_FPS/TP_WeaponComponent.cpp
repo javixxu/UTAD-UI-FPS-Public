@@ -59,7 +59,14 @@ void UTP_WeaponComponent::Fire()
 			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
 	
 			// Spawn the projectile at the muzzle
-			World->SpawnActor<AUTAD_UI_FPSProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			AUTAD_UI_FPSProjectile* Projectile = World->SpawnActor<AUTAD_UI_FPSProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+			if (!Projectile)
+			{
+				return;
+			}
+
+			Projectile->SetDamage(Damage);
+			
 		}
 	}
 	
@@ -157,6 +164,11 @@ int UTP_WeaponComponent::GetCurrentNumBullets()
 void UTP_WeaponComponent::SetCurrentNumBullets(int NewCurrentNumBullets)
 {
 	CurrentNumBullets = NewCurrentNumBullets;
+}
+
+void UTP_WeaponComponent::SetDamage(int NewDamage)
+{
+	Damage = NewDamage;
 }
 
 void UTP_WeaponComponent::AttachWeapon(AUTAD_UI_FPSCharacter* TargetCharacter)

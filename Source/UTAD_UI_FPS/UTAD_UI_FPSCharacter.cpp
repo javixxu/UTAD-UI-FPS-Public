@@ -10,6 +10,7 @@
 
 // UI
 #include "Blueprint/UserWidget.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UI/PlayerHUD.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -176,4 +177,12 @@ void AUTAD_UI_FPSCharacter::AddPoints(int Points)
 void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
 {
 	AttachedWeaponComponent = WeaponComponent;
+}
+
+void AUTAD_UI_FPSCharacter::SetMovementSpeed(float NewSpeed)
+{
+	if (GetCharacterMovement())
+	{
+		GetCharacterMovement()->MaxWalkSpeed = NewSpeed;
+	}
 }
