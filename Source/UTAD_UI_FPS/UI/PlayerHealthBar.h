@@ -6,15 +6,16 @@
 #include "Blueprint/UserWidget.h"
 #include "PlayerHealthBar.generated.h"
 
-/**
- * 
- */
+class UProgressBar;
+
 UCLASS()
 class UTAD_UI_FPS_API UPlayerHealthBar : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 public:
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UProgressBar* PlayerHealthBar;
 
 	UFUNCTION(BlueprintCallable, Category = Visibility)
 	void Show();
@@ -28,6 +29,7 @@ protected:
 
 private:
 
+	float CurrentHealthPercent = 0.f;
 	float BlinkTimer = 0.f;
 	bool bIsLowHealth = false;
 	bool bBlinkTurningRed = true;

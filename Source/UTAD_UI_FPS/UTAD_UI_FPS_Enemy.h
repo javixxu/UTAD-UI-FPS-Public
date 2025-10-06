@@ -6,20 +6,17 @@
 #include "Engine/StaticMeshActor.h"
 #include "UTAD_UI_FPS_Enemy.generated.h"
 
-class UWidgetComponent;
+DECLARE_DELEGATE_TwoParams(FOnEnemyHealthChanged, int /*NewHealth*/, int /*MaxHealth*/);
 
-/**
- * 
- */
 UCLASS()
 class UTAD_UI_FPS_API AUTAD_UI_FPS_Enemy : public AStaticMeshActor
 {
 	GENERATED_BODY()
 	
 public:
-
-	virtual void Tick(float DeltaSeconds) override;
-
+	
+	FOnEnemyHealthChanged OnEnemyHealthChanged;
+	
 	/** Current Health */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stats)
 	int Health = 100;
@@ -28,6 +25,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stats)
 	int MaxHealth = 100;
 
+	/**Points On Death*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stats)
+	int PointsOnKill = 50;
+	
 	/** Setter to set the int */
 	UFUNCTION(BlueprintCallable, Category = Stats)
 	void SetHealth(int NewHealth);
@@ -45,7 +46,7 @@ public:
 	int GetMaxHealth();
 
 protected:
-
+	
 	virtual void BeginPlay() override;
 
 };

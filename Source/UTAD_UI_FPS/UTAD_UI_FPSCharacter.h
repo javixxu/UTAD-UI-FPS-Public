@@ -18,6 +18,7 @@ struct FInputActionValue;
 class UPlayerHUD;
 
 DECLARE_DELEGATE_OneParam(FOnTotalNumBulletsChanged, int/*TOTAL num bullets*/);
+DECLARE_DELEGATE_TwoParams(FOnHealthChanged, int /*NewHealth*/, int /*MaxHealth*/);
 
 UCLASS(config=Game)
 class AUTAD_UI_FPSCharacter : public ACharacter
@@ -72,9 +73,15 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
 	int TotalBullets = 100;
 
-	/*DELEGADO DE TOTALBULLETS*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
+	int CurrentPoints = 25;
+	
+	/*DELEGATE TOTALBULLETS*/
 	FOnTotalNumBulletsChanged OnTotalNumBulletsChanged;
-
+	
+	/*DELEGATE ONCHANGELIFE*/
+	FOnHealthChanged OnHealthChanged;
+	
 	/** Bool for AnimBP to switch to another animation set */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	bool bHasRifle;
@@ -82,7 +89,7 @@ public:
 	/** Setter to set the int */
 	UFUNCTION(BlueprintCallable, Category = Stats)
 	void SetHealth(int NewHealth);
-
+	
 	/** Getter for the int */
 	UFUNCTION(BlueprintCallable, Category = Stats)
 	int GetHealth();
@@ -115,6 +122,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void AddBullets(int Bullets);
 
+	UFUNCTION(BlueprintCallable, Category = Stats)
+	void AddPoints(int Points);
+	
 	void SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent);
 
 	/****************************************************/
@@ -152,6 +162,7 @@ private:
 	/****************************************************/
 
 	/** Instances that will be created and showed on viewport */
+	UPROPERTY()
 	UPlayerHUD* PlayerHUDInstance;
 };
 

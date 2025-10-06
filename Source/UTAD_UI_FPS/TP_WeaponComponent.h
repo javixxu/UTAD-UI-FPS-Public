@@ -9,7 +9,7 @@
 class AUTAD_UI_FPSCharacter;
 
 DECLARE_DELEGATE_OneParam(FOnCurrentNumBulletsChanged, int/*current num bullets*/);
-
+DECLARE_DELEGATE_OneParam(FOnReloadChanged, float/*ReloadTime*/);
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UTAD_UI_FPS_API UTP_WeaponComponent : public USkeletalMeshComponent
@@ -55,6 +55,8 @@ public:
 
 	FOnCurrentNumBulletsChanged OnCurrentNumBulletsChanged;
 
+	FOnReloadChanged OnReloadChanged;
+	
 	/** Sets default values for this component's properties */
 	UTP_WeaponComponent();
 

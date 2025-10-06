@@ -121,6 +121,8 @@ void AUTAD_UI_FPSCharacter::SetHealth(int NewHealth)
 	{
 		Health = ClampedNewHealth;
 	}
+	
+	OnHealthChanged.ExecuteIfBound(Health,MaxHealth);
 }
 
 int AUTAD_UI_FPSCharacter::GetHealth()
@@ -164,6 +166,11 @@ void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
 {
 	TotalBullets += Bullets;
 	OnTotalNumBulletsChanged.ExecuteIfBound(TotalBullets);
+}
+
+void AUTAD_UI_FPSCharacter::AddPoints(int Points)
+{
+	CurrentPoints =  FMath::Max(0, CurrentPoints + Points);
 }
 
 void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)

@@ -6,16 +6,17 @@
 #include "Blueprint/UserWidget.h"
 #include "EnemyHealthBar.generated.h"
 
-/**
- * 
- */
+class UProgressBar;
+
 UCLASS()
 class UTAD_UI_FPS_API UEnemyHealthBar : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UProgressBar* EnemyHealthBar;
+	
 	/** Update the player health bar with the given value */
 	UFUNCTION(BlueprintCallable)
 	void UpdateEnemyHealthBarValue(int Value, int MaxValue);

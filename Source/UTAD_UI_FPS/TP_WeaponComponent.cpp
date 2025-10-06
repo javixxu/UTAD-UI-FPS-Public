@@ -10,8 +10,6 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
-#include "Blueprint/UserWidget.h"
-
 #define RELOAD_TIME 1.f
 
 // Sets default values for this component's properties
@@ -28,8 +26,8 @@ void UTP_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	if (bIsReloading)
 	{
 		ReloadTimer += DeltaTime;
-		// To test ReloadTimer
-		// GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("%f"), ReloadTimer));
+		
+		OnReloadChanged.ExecuteIfBound(ReloadTimer);
 	}
 }
 
@@ -89,15 +87,11 @@ void UTP_WeaponComponent::Fire()
 
 void UTP_WeaponComponent::StartReload()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("START RELOADING 2"));
 	if (Character == nullptr || Character->GetController() == nullptr)
 	{
 		return;
 	}
-
-	//UE_LOG(LogTemp, Error, TEXT("eNTRAAA"));
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("START RELOADING 1"));
-
+	
 	int playerBullets = Character->GetTotalBullets();
 	playerBullets += CurrentNumBullets;
 
@@ -118,7 +112,8 @@ void UTP_WeaponComponent::CompleteReload()
 	}
 
 	bIsReloading = false;
-
+	ReloadTimer = 0.f;
+	
 	int playerBullets = Character->GetTotalBullets();
 	playerBullets += CurrentNumBullets;
 
@@ -127,17 +122,21 @@ void UTP_WeaponComponent::CompleteReload()
 	Character->SetTotalBullets(playerBullets - CurrentNumBullets);
 
 	OnCurrentNumBulletsChanged.ExecuteIfBound(CurrentNumBullets);
+
+	OnReloadChanged.ExecuteIfBound(ReloadTimer);
 }
 
 void UTP_WeaponComponent::CancelReload()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("cancel"));
 	if (Character == nullptr || Character->GetController() == nullptr)
 	{
 		return;
 	}
 
 	bIsReloading = false;
+	ReloadTimer = 0.f;
+	
+	OnReloadChanged.ExecuteIfBound(ReloadTimer);
 }
 
 int UTP_WeaponComponent::GetMagazineSize()
@@ -185,18 +184,14 @@ void UTP_WeaponComponent::AttachWeapon(AUTAD_UI_FPSCharacter* TargetCharacter)
 			// Set the priority of the mapping to 1, so that it overrides the Jump action with the Fire action when using touch input
 			Subsystem->AddMappingContext(FireMappingContext, 1);
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("LINK INPUT"));
 		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 		{
 			// Fire
 			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UTP_WeaponComponent::Fire);
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("1"));
 			// StartReload
 			EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &UTP_WeaponComponent::StartReload);
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("2"));
 			// CompleteReload
 			EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Completed, this, &UTP_WeaponComponent::CompleteReload);
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("3"));
 			// CancelReload
 			EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Canceled, this, &UTP_WeaponComponent::CancelReload);
 		}
