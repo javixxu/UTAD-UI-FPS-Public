@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DataAsset/GenericSkillNodeData.h"
 #include "GameFramework/Character.h"
 #include "UTAD_UI_FPSCharacter.generated.h"
 
@@ -19,6 +20,7 @@ class UPlayerHUD;
 
 DECLARE_DELEGATE_OneParam(FOnTotalNumBulletsChanged, int/*TOTAL num bullets*/);
 DECLARE_DELEGATE_TwoParams(FOnHealthChanged, int /*NewHealth*/, int /*MaxHealth*/);
+DECLARE_DELEGATE_TwoParams(FOnSkillUpdate, ESkillEffect /*SkillEffect*/, int /*Level*/);
 
 UCLASS(config=Game)
 class AUTAD_UI_FPSCharacter : public ACharacter
@@ -73,6 +75,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
 	int TotalBullets = 100;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	int  Damage = 15;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
 	int CurrentPoints = 25;
 	
@@ -81,6 +86,8 @@ public:
 	
 	/*DELEGATE ONCHANGELIFE*/
 	FOnHealthChanged OnHealthChanged;
+
+	FOnSkillUpdate OnSkillUpdate;
 	
 	/** Bool for AnimBP to switch to another animation set */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
@@ -130,6 +137,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void SetMovementSpeed(float NewSpeed);
 
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void SetDamage(float NewDamage);
+	
+	UFUNCTION(BlueprintCallable, Category = Movement)
+	void UpdateSkills(ESkillEffect SkillEffect,int Level);
+	
 	/****************************************************/
 	/************************ UI ************************/
 	/****************************************************/

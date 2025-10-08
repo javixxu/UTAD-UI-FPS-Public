@@ -1,7 +1,10 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SkillSubsystem.h"
+
+#include "UTAD_UI_FPSCharacter.h"
 #include "DataAsset/GenericSkillNodeData.h"
+#include "Kismet/GameplayStatics.h"
 
 void USkillSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
@@ -22,11 +25,16 @@ void USkillSubsystem::Deinitialize()
 
 bool USkillSubsystem::UnlockOrUpgradeSkill(UGenericSkillNodeData* SkillData)
 {
+	AUTAD_UI_FPSCharacter* MainCharacter = Cast<AUTAD_UI_FPSCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (!MainCharacter)return false;
+	
 	if (IsSkillUnlocked(SkillData))return false;
 	
 	int32& Level = SkillLevels.FindOrAdd(SkillData->SkillEffectData.SkillEffect);
 	Level++;
-
+	
+	MainCharacter->OnSkillUpdate.ExecuteIfBound(SkillData->SkillEffectData.SkillEffect, Level);
+	
 	UE_LOG(LogTemp, Log, TEXT("Skill '%s' has been levelled up %d"), *SkillData->SkillName.ToString(), Level);
 	
 	return true;

@@ -10,6 +10,7 @@
 
 // UI
 #include "Blueprint/UserWidget.h"
+#include "DataAsset/GenericSkillNodeData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/PlayerHUD.h"
 
@@ -67,6 +68,9 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player HUD Widget not assigned to UTAD_UI_FPSCharacter"));
 	}
+
+	//Skills
+	OnSkillUpdate.BindUObject(this,&AUTAD_UI_FPSCharacter::UpdateSkills);
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -184,5 +188,28 @@ void AUTAD_UI_FPSCharacter::SetMovementSpeed(float NewSpeed)
 	if (GetCharacterMovement())
 	{
 		GetCharacterMovement()->MaxWalkSpeed = NewSpeed;
+	}
+}
+
+void AUTAD_UI_FPSCharacter::SetDamage(float NewDamage)
+{
+	Damage = NewDamage;
+}
+
+void AUTAD_UI_FPSCharacter::UpdateSkills(const ESkillEffect SkillEffect, const int Level)
+{
+	switch (SkillEffect){
+	case ESkillEffect::IncreaseDamage:
+		SetDamage(Damage + Level * 10);
+		break;
+	case ESkillEffect::IncreaseHealth:
+		SetMaxHealth(GetMaxHealth() + Level * 15);
+		SetHealth(MaxHealth);
+		break;
+	case ESkillEffect::IncreaseSpeed:
+		SetMovementSpeed(GetCharacterMovement()->MaxWalkSpeed + Level * 50);
+		break;
+	default:
+		break;
 	}
 }

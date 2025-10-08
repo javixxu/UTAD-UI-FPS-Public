@@ -65,7 +65,7 @@ void UTP_WeaponComponent::Fire()
 				return;
 			}
 
-			Projectile->SetDamage(Damage);
+			Projectile->SetDamage(Character->Damage);
 			
 		}
 	}
@@ -164,11 +164,6 @@ int UTP_WeaponComponent::GetCurrentNumBullets()
 void UTP_WeaponComponent::SetCurrentNumBullets(int NewCurrentNumBullets)
 {
 	CurrentNumBullets = NewCurrentNumBullets;
-}
-
-void UTP_WeaponComponent::SetDamage(int NewDamage)
-{
-	Damage = NewDamage;
 }
 
 void UTP_WeaponComponent::AttachWeapon(AUTAD_UI_FPSCharacter* TargetCharacter)

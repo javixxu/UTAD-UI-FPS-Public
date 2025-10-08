@@ -97,16 +97,8 @@ public:
 	/** Setter for CurrentNumBullets */
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetCurrentNumBullets(int NewCurrentNumBullets);
-
-	void SetDamage(int NewDamage);
-	
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	int GetDamage()const{return Damage;};
 	
 protected:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-	int  Damage = 40;
 	
 	/** Ends gameplay for this component. */
 	UFUNCTION()
