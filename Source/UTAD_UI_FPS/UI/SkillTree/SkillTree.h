@@ -7,23 +7,24 @@
 #include "SkillTree.generated.h"
 
 
+class USkillFeedback;
 class UButton;
 class USkillNodeWidget;
 class UGenericSkillNodeData;
 class AUTAD_UI_FPSCharacter;
+
+DECLARE_DELEGATE_OneParam(FOnSkillNodeClicked, USkillNodeWidget*);
 
 UCLASS()
 class UTAD_UI_FPS_API USkillTree : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	/** Actualiza la interfaz cuando una habilidad ha sido desbloqueada. */
-	UFUNCTION(BlueprintImplementableEvent, Category = "SkillTree")
-	void OnSkillUnlocked(UGenericSkillNodeData* SkillData);
 
-	/** Actualiza el estado visual de todos los nodos (habilitados/desbloqueados/bloqueados). */
-	UFUNCTION(BlueprintImplementableEvent, Category = "SkillTree")
-	void RefreshTree();
+	FOnSkillNodeClicked OnSkillNodeClicked;
+	
+	UFUNCTION(BlueprintCallable, Category = "SkillTree")
+	void UpdateSkillTree();
 
 	UFUNCTION(BlueprintCallable, Category = "SkillTree")
 	void Show();
@@ -35,15 +36,21 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* UpdateSkillsButton;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	USkillFeedback* Feedback;
 	
 	virtual void NativeConstruct() override;
-	
-	/** Lista de nodos de habilidad que forman parte del árbol. */
-	UPROPERTY(meta = (BindWidgetOptional), BlueprintReadWrite, Category = "SkillTree")
-	TArray<USkillNodeWidget*> SkillNodes;
+
+	UFUNCTION(BlueprintCallable, Category = "SkillTree")
+	void HandleSkillClicked(USkillNodeWidget* Node);
 	
 private:
 	
 	UPROPERTY()
 	AUTAD_UI_FPSCharacter* Character{nullptr};
+	
+	//Clicked Nodes
+	UPROPERTY()
+	TArray<USkillNodeWidget*> SkillNodesClicked;
 };

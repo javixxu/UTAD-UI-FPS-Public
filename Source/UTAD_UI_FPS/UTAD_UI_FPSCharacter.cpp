@@ -1,7 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "UTAD_UI_FPSCharacter.h"
-#include "UTAD_UI_FPSProjectile.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -237,18 +236,18 @@ void AUTAD_UI_FPSCharacter::SetDamage(float NewDamage)
 	Damage = NewDamage;
 }
 
-void AUTAD_UI_FPSCharacter::UpdateSkills(const ESkillEffect SkillEffect, const int Level)
+void AUTAD_UI_FPSCharacter::UpdateSkills(const FSkillEffectData SkillData)
 {
-	switch (SkillEffect){
+	switch (SkillData.SkillEffect){
 	case ESkillEffect::IncreaseDamage:
-		SetDamage(Damage + Level * 10);
+		SetDamage(Damage + SkillData.LevelEffect * 10);
 		break;
 	case ESkillEffect::IncreaseHealth:
-		SetMaxHealth(GetMaxHealth() + Level * 15);
+		SetMaxHealth(GetMaxHealth() + SkillData.LevelEffect * 15);
 		SetHealth(MaxHealth);
 		break;
 	case ESkillEffect::IncreaseSpeed:
-		SetMovementSpeed(GetCharacterMovement()->MaxWalkSpeed + Level * 50);
+		SetMovementSpeed(GetCharacterMovement()->MaxWalkSpeed + SkillData.LevelEffect * 50);
 		break;
 	default:
 		break;

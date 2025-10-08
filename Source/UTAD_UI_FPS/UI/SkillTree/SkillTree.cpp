@@ -5,7 +5,9 @@
 
 #include "SkillNodeWidget.h"
 #include "Blueprint/WidgetTree.h"
+#include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "UTAD_UI_FPS/SkillSubsystem.h"
 #include "UTAD_UI_FPS/UTAD_UI_FPSCharacter.h"
 
 void USkillTree::NativeConstruct()
@@ -13,19 +15,23 @@ void USkillTree::NativeConstruct()
 	Super::NativeConstruct();
 
 	Character = Cast<AUTAD_UI_FPSCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	UpdateSkillsButton->OnClicked.AddDynamic(this, &USkillTree::UpdateSkillTree);
+	
+	OnSkillNodeClicked.BindUObject(this, &USkillTree::HandleSkillClicked);
+}
 
-	SkillNodes.Empty();
-	// Get All Nodes
-	TArray<UWidget*> AllWidgets;
-	WidgetTree->GetAllWidgets(AllWidgets);
-
-	for (UWidget* Widget : AllWidgets)
+void USkillTree::UpdateSkillTree()
+{
+	USkillSubsystem* SkillSubsystem = GetGameInstance()->GetSubsystem<USkillSubsystem>();
+	for (USkillNodeWidget* Node: SkillNodesClicked)
 	{
-		if (USkillNodeWidget* SkillNode = Cast<USkillNodeWidget>(Widget))
-		{
-			SkillNodes.Add(SkillNode);
-		}
+		bool bSuccess = SkillSubsystem->UnlockOrUpgradeSkill(Node->GetSkillData());
+
+		Node->ResetNode(bSuccess);
 	}
+	
+	//reset
+	SkillNodesClicked.Empty();
 }
 
 void USkillTree::Show()
@@ -36,4 +42,9 @@ void USkillTree::Show()
 void USkillTree::Hide()
 {
 	SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void USkillTree::HandleSkillClicked(USkillNodeWidget* Node)
+{
+	SkillNodesClicked.Add(Node);
 }

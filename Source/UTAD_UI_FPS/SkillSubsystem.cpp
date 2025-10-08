@@ -33,7 +33,7 @@ bool USkillSubsystem::UnlockOrUpgradeSkill(UGenericSkillNodeData* SkillData)
 	int32& Level = SkillLevels.FindOrAdd(SkillData->SkillEffectData.SkillEffect);
 	Level++;
 	
-	MainCharacter->OnSkillUpdate.ExecuteIfBound(SkillData->SkillEffectData.SkillEffect, Level);
+	MainCharacter->OnSkillUpdate.ExecuteIfBound(SkillData->SkillEffectData);
 	
 	UE_LOG(LogTemp, Log, TEXT("Skill '%s' has been levelled up %d"), *SkillData->SkillName.ToString(), Level);
 	
@@ -46,7 +46,7 @@ bool USkillSubsystem::IsSkillUnlocked(UGenericSkillNodeData* SkillData) const
 		return false;
 
 	const int32* Found = SkillLevels.Find(SkillData->SkillEffectData.SkillEffect);
-	return Found && *Found > -1;
+	return Found && *Found -1 == SkillData->SkillEffectData.LevelEffect;
 }
 
 int32 USkillSubsystem::GetSkillLevel(const UGenericSkillNodeData* SkillData) const

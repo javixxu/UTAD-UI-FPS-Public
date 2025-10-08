@@ -20,7 +20,7 @@ class UPlayerHUD;
 
 DECLARE_DELEGATE_OneParam(FOnTotalNumBulletsChanged, int/*TOTAL num bullets*/);
 DECLARE_DELEGATE_TwoParams(FOnHealthChanged, int /*NewHealth*/, int /*MaxHealth*/);
-DECLARE_DELEGATE_TwoParams(FOnSkillUpdate, ESkillEffect /*SkillEffect*/, int /*Level*/);
+DECLARE_DELEGATE_OneParam(FOnSkillUpdate,FSkillEffectData /**/);
 
 UCLASS(config=Game)
 class AUTAD_UI_FPSCharacter : public ACharacter
@@ -83,7 +83,7 @@ public:
 	int  Damage = 15;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon)
-	int CurrentPoints = 25;
+	int CurrentPoints = 250;
 	
 	/*DELEGATE TOTALBULLETS*/
 	FOnTotalNumBulletsChanged OnTotalNumBulletsChanged;
@@ -146,11 +146,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Movement)
 	void SetMovementSpeed(float NewSpeed);
 
-	UFUNCTION(BlueprintCallable, Category = Movement)
+	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void SetDamage(float NewDamage);
 	
-	UFUNCTION(BlueprintCallable, Category = Movement)
-	void UpdateSkills(ESkillEffect SkillEffect,int Level);
+	UFUNCTION(BlueprintCallable, Category = Skills)
+	void UpdateSkills(const FSkillEffectData SkillData);
+	
+	UFUNCTION(BlueprintCallable, Category = UI)
+	UPlayerHUD* GetPlayerHUDInstance() const { return PlayerHUDInstance; }
 	
 	/****************************************************/
 	/************************ UI ************************/
