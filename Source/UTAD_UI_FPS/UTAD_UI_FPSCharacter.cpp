@@ -61,7 +61,9 @@ void AUTAD_UI_FPSCharacter::BeginPlay()
 	{
 		PlayerHUDInstance = CreateWidget<UPlayerHUD>(GetWorld(), PlayerHUDWidget);
 		PlayerHUDInstance->AddToViewport();
+		
 		PlayerHUDInstance->ShowNoWeapon();
+		PlayerHUDInstance->HideSkillTree();
 	}
 	else
 	{
@@ -89,6 +91,9 @@ void AUTAD_UI_FPSCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::Look);
+
+		//Skill Tree
+		EnhancedInputComponent->BindAction(SkillTreeAction, ETriggerEvent::Triggered, this, &AUTAD_UI_FPSCharacter::SkillTree);
 	}
 }
 
@@ -108,6 +113,8 @@ void AUTAD_UI_FPSCharacter::Move(const FInputActionValue& Value)
 
 void AUTAD_UI_FPSCharacter::Look(const FInputActionValue& Value)
 {
+	if (bIsSkillTreeActive)return;
+	
 	// input is a Vector2D
 	FVector2D LookAxisVector = Value.Get<FVector2D>();
 
@@ -116,6 +123,40 @@ void AUTAD_UI_FPSCharacter::Look(const FInputActionValue& Value)
 		// add yaw and pitch input to controller
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
+	}
+}
+
+void AUTAD_UI_FPSCharacter::SkillTree(const FInputActionValue& Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Open Skill Tree"));
+
+	bIsSkillTreeActive = !bIsSkillTreeActive;
+	PlayerHUDInstance->HandleSkillTree(bIsSkillTreeActive,GetHasRifle());
+	
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (!PC) return;
+
+	if (bIsSkillTreeActive)
+	{
+	
+		// Show mouse and cancel movement
+		PC->bShowMouseCursor = true;
+
+		FInputModeGameAndUI InputMode;
+		InputMode.SetHideCursorDuringCapture(false);
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		PC->SetInputMode(InputMode);
+		
+		GetCharacterMovement()->DisableMovement();
+	}
+	else
+	{
+		// Disable mouse cursor and get back default mode
+		PC->bShowMouseCursor = false;
+		PC->SetInputMode(FInputModeGameOnly());
+
+		// Get Back the movement
+		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 	}
 }
 

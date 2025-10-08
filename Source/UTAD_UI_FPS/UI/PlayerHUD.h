@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "PlayerHUD.generated.h"
 
+class USkillTree;
 class UAmmoCounter;
 class UCrosshair;
 class UPlayerHealthBar;
@@ -28,6 +29,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UReloadBar* ReloadBarWidget;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	USkillTree* SkillTree;
 	
 	/** Show the Minimap and the PlayerHealthBar */
 	UFUNCTION(BlueprintCallable, Category = Visibility)
@@ -40,5 +44,14 @@ public:
 	/** Hide all the widgets */
 	UFUNCTION(BlueprintCallable, Category = Visibility)
 	void Hide();
+
+	UFUNCTION(BlueprintCallable, Category = Visibility)
+	void ShowSkillTree();
+	
+	UFUNCTION(BlueprintCallable, Category = Visibility)
+	void HideSkillTree();
+
+	UFUNCTION(BlueprintCallable, Category = Visibility)
+	void HandleSkillTree(bool bIsActive, bool bHasRifle);
 
 };

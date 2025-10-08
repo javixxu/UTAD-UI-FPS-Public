@@ -51,6 +51,14 @@ class AUTAD_UI_FPSCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	class UInputAction* MoveAction;
 	
+	/** Look Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* LookAction;
+
+	/** Open Skill Tree Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* SkillTreeAction;
+	
 public:
 	AUTAD_UI_FPSCharacter();
 
@@ -58,11 +66,7 @@ protected:
 	virtual void BeginPlay();
 
 public:
-		
-	/** Look Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;
-
+	
 	/** Current Health */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Stats)
 	int Health = 100;
@@ -92,6 +96,11 @@ public:
 	/** Bool for AnimBP to switch to another animation set */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon)
 	bool bHasRifle;
+
+	/** Bool for AnimBP to switch to another animation set */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = SkillTree)
+	bool bIsSkillTreeActive = false;
+	
 
 	/** Setter to set the int */
 	UFUNCTION(BlueprintCallable, Category = Stats)
@@ -157,6 +166,9 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	/** Called for looking input */
+	void SkillTree(const FInputActionValue& Value);
 
 protected:
 	// APawn interface

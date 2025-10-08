@@ -6,12 +6,12 @@
 #include "Blueprint/UserWidget.h"
 #include "SkillNodeWidget.generated.h"
 
+class UBorder;
+class UImage;
 class UDescriptionSkill;
 class UTextBlock;
 class AUTAD_UI_FPSCharacter;
 class UGenericSkillNodeData;
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSkillUnlocked, UGenericSkillNodeData*, Skill);
 
 UCLASS()
 class UTAD_UI_FPS_API USkillNodeWidget : public UUserWidget
@@ -23,23 +23,41 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	UGenericSkillNodeData* SkillData{nullptr};
 	
-	// Evento que se dispara al desbloquear
-	UPROPERTY(BlueprintAssignable, Category = "Skill")
-	FOnSkillUnlocked OnSkillUnlocked;
-	
 protected:
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UDescriptionSkill* DescriptionWidget{nullptr};
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* IconImage{nullptr};
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UBorder* Border{nullptr};
+
+	UPROPERTY(EditDefaultsOnly,Category = "FeedBack|Color")
+	FColor OnHoverColor;
+	UPROPERTY(EditDefaultsOnly,Category = "FeedBack|Color")
+	FColor OnPressedColor;
+	UPROPERTY(EditDefaultsOnly,Category = "FeedBack|Color")
+	FColor OnNormalColor;
+	UPROPERTY(EditDefaultsOnly,Category = "FeedBack|Color")
+	FColor OnCompletedColor;
+	
+	virtual  void NativePreConstruct() override;
+	
 	virtual void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Skill")
 	void TryUnlockSkill();
-
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	UDescriptionSkill* DescriptionWidget{nullptr};
-
+	
 	virtual void NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 private:
 	UPROPERTY()
 	AUTAD_UI_FPSCharacter* Character{nullptr};
+
+	void PutIconDataOnImage() const;
+
+	void UpdateDescription() const;
+	
 };
