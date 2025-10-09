@@ -38,9 +38,7 @@ void USkillNodeWidget::NativeConstruct()
 	{
 		ResetNode(true);
 	}
-	
 }
-
 void USkillNodeWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
 	Super::NativeOnMouseEnter(InGeometry, InMouseEvent);
@@ -65,6 +63,18 @@ FReply USkillNodeWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, co
 {
 	if (bIsCompleted)
 	{
+		FLinearColor DeniedColor = FLinearColor::Red;
+
+		// Parpadeo rápido
+		Border->SetBrushColor(DeniedColor);
+
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+		{
+			if (Border)
+				Border->SetBrushColor(OnCompletedColor);
+		}, 0.6f, false);
+
 		return FReply::Handled();
 	}
 	

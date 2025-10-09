@@ -14,6 +14,7 @@ void USkillSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	SkillLevels.Add(ESkillEffect::IncreaseSpeed,1);
 	SkillLevels.Add(ESkillEffect::IncreaseHealth,1); 
 	SkillLevels.Add(ESkillEffect::IncreaseDamage,1);
+	SkillLevels.Add(ESkillEffect::Central,1);
 	
 	UE_LOG(LogTemp, Log, TEXT("SkillSubsystem Initialized."));
 }

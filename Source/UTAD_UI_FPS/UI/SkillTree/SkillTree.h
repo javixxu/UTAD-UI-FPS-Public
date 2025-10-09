@@ -7,6 +7,7 @@
 #include "SkillTree.generated.h"
 
 
+class UCanvasPanel;
 class UHoldButtonWidget;
 class USkillFeedback;
 class USkillNodeWidget;
@@ -22,6 +23,8 @@ class UTAD_UI_FPS_API USkillTree : public UUserWidget
 public:
 
 	FOnSkillNodeClicked OnSkillNodeClicked;
+	
+	UPROPERTY(EditAnywhere, Category="Skill Tree")
 	float ShowFeedbackTime = 3.0f;
 
 	UFUNCTION(BlueprintCallable, Category = "SkillTree")
@@ -34,13 +37,16 @@ public:
 	void Hide();
 	
 protected:
-
+	
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UCanvasPanel* CanvasPanel;
+	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UHoldButtonWidget* UpdateSkillsButton;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	USkillFeedback* Feedback;
-	
+
 	virtual void NativeConstruct() override;
 
 	UFUNCTION(BlueprintCallable, Category = "SkillTree")

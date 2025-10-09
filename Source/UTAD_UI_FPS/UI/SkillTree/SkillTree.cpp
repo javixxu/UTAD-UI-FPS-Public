@@ -6,6 +6,7 @@
 #include "SkillFeedback.h"
 #include "SkillNodeWidget.h"
 #include "Blueprint/WidgetTree.h"
+#include "Components/CanvasPanel.h"
 #include "Kismet/GameplayStatics.h"
 #include "UTAD_UI_FPS/SkillSubsystem.h"
 #include "UTAD_UI_FPS/UTAD_UI_FPSCharacter.h"

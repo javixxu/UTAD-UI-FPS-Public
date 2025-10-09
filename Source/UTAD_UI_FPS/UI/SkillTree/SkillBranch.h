@@ -6,7 +6,20 @@
 #include "Blueprint/UserWidget.h"
 #include "SkillBranch.generated.h"
 
+class USkillNodeWidget;
 class UVerticalBox;
+
+USTRUCT()
+struct FSkillConnection
+{
+	GENERATED_BODY()
+
+	UPROPERTY()
+	USkillNodeWidget* From;
+
+	UPROPERTY()
+	USkillNodeWidget* To;
+};
 
 UCLASS()
 class UTAD_UI_FPS_API USkillBranch : public UUserWidget

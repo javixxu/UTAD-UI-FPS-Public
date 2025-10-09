@@ -10,6 +10,7 @@ UENUM(BlueprintType)
 enum class ESkillEffect : uint8
 {
 	None        UMETA(DisplayName = "None"),
+	Central UMETA(DisplayName = "Central"),
 	IncreaseSpeed UMETA(DisplayName = "Increase Speed"),
 	IncreaseHealth UMETA(DisplayName = "Increase Health"),
 	IncreaseDamage UMETA(DisplayName = "Increase Damage"),
