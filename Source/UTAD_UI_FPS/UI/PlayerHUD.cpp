@@ -4,6 +4,7 @@
 #include "PlayerHUD.h"
 #include "AmmoCounter.h"
 #include "PlayerHealthBar.h"
+#include "PointsCounter.h"
 #include "ReloadBar.h"
 #include "SkillTree/SkillTree.h"
 
@@ -12,6 +13,7 @@ void UPlayerHUD::ShowNoWeapon()
 	AmmoCounterWidget->Hide();
 	ReloadBarWidget->Hide();
 	PlayerHealthBarWidget->Show();
+	PointsCounter->Show();
 }
 
 void UPlayerHUD::ShowAll()
@@ -19,6 +21,7 @@ void UPlayerHUD::ShowAll()
 	AmmoCounterWidget->Show();
 	PlayerHealthBarWidget->Show();
 	ReloadBarWidget->Show();
+	PointsCounter->Show();
 }
 
 void UPlayerHUD::Hide()
@@ -26,11 +29,13 @@ void UPlayerHUD::Hide()
 	AmmoCounterWidget->Hide();
 	PlayerHealthBarWidget->Hide();
 	ReloadBarWidget->Hide();
+	PointsCounter->Hide();
 }
 
 void UPlayerHUD::ShowSkillTree()
 {
 	SkillTree->Show();
+	PointsCounter->Show();
 }
 
 void UPlayerHUD::HideSkillTree()
@@ -42,13 +47,14 @@ void UPlayerHUD::HandleSkillTree(bool bIsActive, bool bHasRifle)
 {
 	if (bIsActive)
 	{
-		ShowSkillTree(); 
 		Hide();
+		ShowSkillTree(); 
 	}
 	else
 	{
-		HideSkillTree();
 		if (bHasRifle)ShowAll();
 		else ShowNoWeapon();
+		
+		HideSkillTree();
 	}
 }

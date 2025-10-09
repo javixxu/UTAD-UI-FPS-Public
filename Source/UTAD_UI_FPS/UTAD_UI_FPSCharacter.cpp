@@ -216,8 +216,11 @@ void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
 void AUTAD_UI_FPSCharacter::AddPoints(int Points)
 {
 	CurrentPoints =  FMath::Max(0, CurrentPoints + Points);
+	
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Points: %d"), CurrentPoints));
+	
+	OnPointsChanged.Broadcast(CurrentPoints);
 }
-
 void AUTAD_UI_FPSCharacter::SetAttachedWeaponComponent(UTP_WeaponComponent* WeaponComponent)
 {
 	AttachedWeaponComponent = WeaponComponent;

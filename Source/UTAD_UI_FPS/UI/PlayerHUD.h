@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "PlayerHUD.generated.h"
 
+class UPointsCounter;
 class USkillTree;
 class UAmmoCounter;
 class UCrosshair;
@@ -32,6 +33,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	USkillTree* SkillTree;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UPointsCounter* PointsCounter;
 	
 	/** Show the Minimap and the PlayerHealthBar */
 	UFUNCTION(BlueprintCallable, Category = Visibility)

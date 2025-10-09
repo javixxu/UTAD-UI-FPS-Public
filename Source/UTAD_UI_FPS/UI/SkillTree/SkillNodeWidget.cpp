@@ -10,6 +10,7 @@
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
+#include "UTAD_UI_FPS/SkillSubsystem.h"
 #include "UTAD_UI_FPS/UTAD_UI_FPSCharacter.h"
 #include "UTAD_UI_FPS/UI/PlayerHUD.h"
 
@@ -28,10 +29,16 @@ void USkillNodeWidget::NativeConstruct()
 	
 	Character = Cast<AUTAD_UI_FPSCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
-	DescriptionWidget->SetVisibility(ESlateVisibility::Collapsed);
+	DescriptionWidget->SetVisibility(ESlateVisibility::Hidden);
 	bWasClicked = false;
 
 	MyHUD = Character->GetPlayerHUDInstance();
+
+	if (GetGameInstance()->GetSubsystem<USkillSubsystem>()->GetSkillLevel(SkillData) == SkillData->SkillEffectData.LevelEffect)
+	{
+		ResetNode(true);
+	}
+	
 }
 
 void USkillNodeWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -48,7 +55,7 @@ void USkillNodeWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 {
 	Super::NativeOnMouseLeave(InMouseEvent);
 	
-	DescriptionWidget->SetVisibility(ESlateVisibility::Collapsed);
+	DescriptionWidget->SetVisibility(ESlateVisibility::Hidden);
 
 	if (bWasClicked || bIsCompleted)return; // iF WAS CLICKED WE WANT TO KEEP THE COLOR
 	Border->SetBrushColor(OnNormalColor);
@@ -56,9 +63,10 @@ void USkillNodeWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 
 FReply USkillNodeWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if (bIsCompleted)return FReply::Handled();
-	
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("On Click"));
+	if (bIsCompleted)
+	{
+		return FReply::Handled();
+	}
 	
 	bWasClicked = !bWasClicked;
 	

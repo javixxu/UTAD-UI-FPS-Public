@@ -13,12 +13,14 @@ UCLASS()
 class UTAD_UI_FPS_API USkillFeedback : public UUserWidget
 {
 	GENERATED_BODY()
-	
 public:
+	UFUNCTION(BlueprintCallable, Category = "SkillFeedback")
+	void SetFeedback(FText InText, float ShowTime);
+
+protected:
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* TextBlock;
-	
-	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	UBorder* Border;
+private:
+	FTimerHandle TimerHandle;
 };

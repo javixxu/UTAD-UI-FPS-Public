@@ -20,6 +20,7 @@ class UPlayerHUD;
 
 DECLARE_DELEGATE_OneParam(FOnTotalNumBulletsChanged, int/*TOTAL num bullets*/);
 DECLARE_DELEGATE_TwoParams(FOnHealthChanged, int /*NewHealth*/, int /*MaxHealth*/);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnPointsChanged, int, NewPoints);
 DECLARE_DELEGATE_OneParam(FOnSkillUpdate,FSkillEffectData /**/);
 
 UCLASS(config=Game)
@@ -91,6 +92,10 @@ public:
 	/*DELEGATE ONCHANGELIFE*/
 	FOnHealthChanged OnHealthChanged;
 
+	/*On Points Changed*/
+	FOnPointsChanged OnPointsChanged;
+	
+	/*On SKILL uPDATE*/
 	FOnSkillUpdate OnSkillUpdate;
 	
 	/** Bool for AnimBP to switch to another animation set */
@@ -138,6 +143,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	void AddBullets(int Bullets);
 
+	/**Added Points*/
 	UFUNCTION(BlueprintCallable, Category = Stats)
 	void AddPoints(int Points);
 	
@@ -172,8 +178,7 @@ protected:
 
 	/** Called for looking input */
 	void SkillTree(const FInputActionValue& Value);
-
-protected:
+	
 	// APawn interface
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	// End of APawn interface
