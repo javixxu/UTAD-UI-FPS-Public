@@ -24,16 +24,10 @@ Este proyecto implementa un sistema de árbol de habilidades interactivo desarro
 #### USkillTree
 Widget principal que gestiona todo el sistema de árbol de habilidades.
 
-**Responsabilidades:**
-- Gestiona la colección de nodos de habilidades
-- Procesa las actualizaciones del árbol
-- Maneja la lógica de desbloqueo de habilidades
-- Coordina la retroalimentación al usuario
-
-**Características clave:**
-- Sistema de selección múltiple de habilidades
-- Validación de requisitos para desbloqueo
-- Gestión de mensajes de retroalimentación
+**Funcionalidades**
+- Visualizar el árbol completo de habilidades y su estado actual.  
+- Actualizar dinámicamente la interfaz al modificar el estado de las habilidades.  
+- Proporcionar mensajes de retroalimentación visual y textual al usuario.
 
 #### USkillNodeWidget
 Widget que representa visualmente una habilidad individual en el árbol.
@@ -51,7 +45,7 @@ Widget que representa visualmente una habilidad individual en el árbol.
 - `CompletedColor`: Habilidad desbloqueada
 - `DeniedColor`: No disponible
 
-**Funcionalidades:**
+**Funcionalidades**
 - Gestión de estados visuales
 - Manejo de interacciones del usuario
 - Actualización automática de descripción
@@ -64,7 +58,7 @@ Widget que muestra la información detallada de una habilidad.
 - `DescriptionText`: Texto descriptivo de la habilidad
 - `NameText`: Nombre de la habilidad
 
-**Características:**
+**Funcionalidades**
 - Visibilidad controlada por hover
 - Actualización dinámica de contenido
 - Integración con datos de habilidad
@@ -72,7 +66,7 @@ Widget que muestra la información detallada de una habilidad.
 #### USkillFeedback
 Sistema de retroalimentación visual para el usuario.
 
-**Funcionalidades:**
+**Funcionalidades**
 - Mostrar mensajes de estado
 - Temporizador para mensajes
 - Retroalimentación de acciones
@@ -86,11 +80,9 @@ Widget de botón que requiere mantener presionado para activar.
 - `HoldProgressBar`: Barra de progreso visual
 - `HoldDuration`: Tiempo requerido de presión
 
-**Características:**
+**Funcionalidades**
 - Retroalimentación visual de progreso
-- Sistema de cancelación
-- Evento de completado
-- Estados visuales dinámicos
+- Dispara el evento cuando el jugador mantiene presionado el botón durante el tiempo requerido.
 
 #### USkillSubsystem
 Subsistema que gestiona la lógica central del sistema de habilidades a nivel de GameInstance.
