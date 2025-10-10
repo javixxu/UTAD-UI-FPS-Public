@@ -46,7 +46,7 @@ void USkillNodeWidget::NativeOnMouseEnter(const FGeometry& InGeometry, const FPo
 	DescriptionWidget->SetVisibility(ESlateVisibility::Visible);
 	
 	if (bWasClicked || bIsCompleted)return; // iF WAS CLICKED WE WANT TO KEEP THE COLOR
-	Border->SetBrushColor(OnHoverColor);
+	Border->SetBrushColor(HoverColor);
 }
 
 void USkillNodeWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
@@ -56,34 +56,34 @@ void USkillNodeWidget::NativeOnMouseLeave(const FPointerEvent& InMouseEvent)
 	DescriptionWidget->SetVisibility(ESlateVisibility::Hidden);
 
 	if (bWasClicked || bIsCompleted)return; // iF WAS CLICKED WE WANT TO KEEP THE COLOR
-	Border->SetBrushColor(OnNormalColor);
+	Border->SetBrushColor(NormalColor);
 }
 
 FReply USkillNodeWidget::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
 	if (bIsCompleted)
 	{
-		FLinearColor DeniedColor = FLinearColor::Red;
-
-		// Parpadeo rápido
 		Border->SetBrushColor(DeniedColor);
-
-		FTimerHandle TimerHandle;
-		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
-		{
-			if (Border)
-				Border->SetBrushColor(OnCompletedColor);
-		}, 0.6f, false);
 
 		return FReply::Handled();
 	}
 	
 	bWasClicked = !bWasClicked;
 	
-	Border->SetBrushColor(bWasClicked ? OnPressedColor: OnNormalColor);
+	Border->SetBrushColor(bWasClicked ? PressedColor: NormalColor);
 
 	//ADD THIS NODE_DATA TO THE SKILL on the NODE CLICKED event
 	MyHUD->SkillTree->OnSkillNodeClicked.ExecuteIfBound(this);
+	
+	return FReply::Handled();
+}
+
+FReply USkillNodeWidget::NativeOnMouseButtonUp(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
+{
+	if (bIsCompleted)
+	{
+		Border->SetBrushColor(CompletedColor);
+	}
 	
 	return FReply::Handled();
 }
@@ -93,7 +93,7 @@ void USkillNodeWidget::ResetNode(bool bSuccess)
 	bWasClicked = false;
 	bIsCompleted = bSuccess;
 	
-	Border->SetBrushColor(bSuccess ? OnCompletedColor: OnNormalColor);
+	Border->SetBrushColor(bSuccess ? CompletedColor: NormalColor);
 }
 
 UGenericSkillNodeData* USkillNodeWidget::GetSkillData() const

@@ -62,12 +62,29 @@ void USkillTree::UpdateSkillTree()
 
 FString USkillSubsystem::GetSkillUnlockResultMessage(ESkillUnlockResult Result)
 {
-	if (const UEnum* EnumPtr = StaticEnum<ESkillUnlockResult>())
+	switch (Result)
 	{
-		return EnumPtr->GetDisplayNameTextByValue(static_cast<int64>(Result)).ToString();
-	}
+	case ESkillUnlockResult::CanUnlock:
+		return TEXT("The skill has been unlocked.!");
+		
+	case ESkillUnlockResult::AlreadyUnlocked:
+		return TEXT("This skill is already unlocked.");
+		
+	case ESkillUnlockResult::NoEnoughPoints:
+		return TEXT("You don't have enough skill points to unlock this skill.");
+		
+	case ESkillUnlockResult::AlreadyMaxLevel:
+		return TEXT("This skill is already at maximum level.");
+		
+	case ESkillUnlockResult::LevelTooLow:
+		return TEXT("Your level is too low to unlock this skill.");
+		
+	case ESkillUnlockResult::InvalidSkillData:
+		return TEXT("Invalid skill data detected.");
 
-	return TEXT("Unknown Result");
+	default:
+		return TEXT("Unknown skill unlock result.");
+	}
 }
 
 void USkillTree::Show()

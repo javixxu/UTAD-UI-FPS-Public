@@ -41,13 +41,15 @@ protected:
 	UBorder* Border{nullptr};
 
 	UPROPERTY(EditDefaultsOnly,Category = "Skill|FeedBack")
-	FColor OnHoverColor;
+	FColor HoverColor;
 	UPROPERTY(EditDefaultsOnly,Category = "Skill|FeedBack")
-	FColor OnPressedColor;
+	FColor PressedColor;
 	UPROPERTY(EditDefaultsOnly,Category = "Skill|FeedBack")
-	FColor OnNormalColor;
+	FColor NormalColor;
 	UPROPERTY(EditDefaultsOnly,Category = "Skill|FeedBack")
-	FColor OnCompletedColor;
+	FColor CompletedColor;
+	UPROPERTY(EditDefaultsOnly,Category = "Skill|FeedBack")
+	FColor DeniedColor = FColor::Red;
 	
 	virtual  void NativePreConstruct() override;
 	
@@ -58,6 +60,8 @@ protected:
 	virtual void NativeOnMouseLeave(const FPointerEvent& InMouseEvent) override;
 	
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+
+	virtual FReply NativeOnMouseButtonUp(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 
 private:
 
