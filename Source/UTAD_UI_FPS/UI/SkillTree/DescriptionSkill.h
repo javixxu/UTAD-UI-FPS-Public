@@ -17,6 +17,8 @@ class UTAD_UI_FPS_API UDescriptionSkill : public UUserWidget
 	GENERATED_BODY()
 	
 public:
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UTextBlock* CostText{nullptr};
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* DescriptionText{nullptr};

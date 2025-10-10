@@ -118,7 +118,8 @@ void USkillNodeWidget::UpdateDescription() const
 {
 	if (!DescriptionWidget || !SkillData)
 		return;
-	
+
+	DescriptionWidget->CostText->SetText(FText::FromString(FString::Printf(TEXT("Cost: %d"), SkillData->Cost)));
 	DescriptionWidget->DescriptionText->SetText(SkillData->Description);	
 	DescriptionWidget->NameText->SetText(SkillData->SkillName);	
 }
