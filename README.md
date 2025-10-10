@@ -93,7 +93,7 @@ Widget de botón que requiere mantener presionado para activar.
 - Estados visuales dinámicos
 
 #### USkillSubsystem
-Subsistema que gestiona la lógica del árbol de habilidades.
+Subsistema que gestiona la lógica central del sistema de habilidades a nivel de GameInstance.
 
 **Estados de Desbloqueo**:
 - `CanUnlock`: La habilidad puede desbloquearse
