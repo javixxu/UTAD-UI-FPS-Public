@@ -58,11 +58,12 @@ void UHoldButtonWidget::ResetHold()
 void UHoldButtonWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-
+	
 	if (bIsHolding)
 	{
+		//Update the progress bar if the button is pressed
 		HoldElapsed += InDeltaTime;
-		float Progress = FMath::Clamp(HoldElapsed / HoldDuration, 0.0f, 1.0f);
+		const float Progress = FMath::Clamp(HoldElapsed / HoldDuration, 0.0f, 1.0f);
 
 		if (HoldProgressBar)
 			HoldProgressBar->SetPercent(Progress);

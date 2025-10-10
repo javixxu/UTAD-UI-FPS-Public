@@ -19,7 +19,8 @@ public:
 	virtual void NativeConstruct() override;
 	
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
+
+	//The time the button must be pressed for the completed event to be called
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Hold Button")
 	float HoldDuration = 1.0f;
 	

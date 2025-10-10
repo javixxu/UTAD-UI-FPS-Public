@@ -127,8 +127,6 @@ void AUTAD_UI_FPSCharacter::Look(const FInputActionValue& Value)
 
 void AUTAD_UI_FPSCharacter::SkillTree(const FInputActionValue& Value)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Open Skill Tree"));
-
 	bIsSkillTreeActive = !bIsSkillTreeActive;
 	PlayerHUDInstance->HandleSkillTree(bIsSkillTreeActive,GetHasRifle());
 	
@@ -216,8 +214,6 @@ void AUTAD_UI_FPSCharacter::AddBullets(int Bullets)
 void AUTAD_UI_FPSCharacter::AddPoints(int Points)
 {
 	CurrentPoints =  FMath::Max(0, CurrentPoints + Points);
-	
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("Points: %d"), CurrentPoints));
 	
 	OnPointsChanged.Broadcast(CurrentPoints);
 }

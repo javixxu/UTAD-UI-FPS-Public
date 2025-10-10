@@ -20,6 +20,7 @@ class UTAD_UI_FPS_API USkillNodeWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 
+	//Reset The Node
 	UFUNCTION(BlueprintCallable, Category = "Skill")
 	void ResetNode(bool bSuccess = false);
 
@@ -27,7 +28,7 @@ public:
 	UGenericSkillNodeData* GetSkillData() const;
 	
 protected:
-	// Data Asset que representa la habilidad
+	// Data Asset representing the skill
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Skill")
 	UGenericSkillNodeData* SkillData{nullptr};
 	

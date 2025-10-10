@@ -111,12 +111,6 @@ void USkillNodeWidget::PutIconDataOnImage() const
 	FSlateBrush Brush;
 	Brush.SetResourceObject(SkillData->Icon);
 	
-	/*
-	Brush.ImageSize = FVector2D(
-		SkillData->Icon->GetSizeX(),
-		SkillData->Icon->GetSizeY()
-	);*/
-	
 	IconImage->SetBrush(Brush);
 }
 

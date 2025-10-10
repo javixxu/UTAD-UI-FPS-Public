@@ -22,17 +22,16 @@ class UTAD_UI_FPS_API USkillSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 public:
-	// Inicialización del subsistema
+	
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-
-	// Desinicialización
+	
 	virtual void Deinitialize() override;
 	
-	// Función para desbloquear una habilidad
+	// Function to unlock a skill
 	UFUNCTION(BlueprintCallable, Category = "Skill System")
 	ESkillUnlockResult UnlockOrUpgradeSkill(UGenericSkillNodeData* SkillData);
 	
-	// Comprueba si una habilidad ya está desbloqueada
+	// Check whether a skill is already unlocked
 	UFUNCTION(BlueprintCallable, Category = "Skill System")
 	ESkillUnlockResult CanSkillUnlocked(UGenericSkillNodeData* SkillData) const;
 
@@ -42,7 +41,7 @@ public:
 	static FString GetSkillUnlockResultMessage(ESkillUnlockResult Result);
 
 private:
-	// Nivel de las habilitates desbloqueadas
+	// Level of unlocked skills
 	UPROPERTY()
 	TMap<ESkillEffect, int32> SkillLevels;
 };

@@ -30,19 +30,19 @@ ESkillUnlockResult USkillSubsystem::UnlockOrUpgradeSkill(UGenericSkillNodeData* 
 	AUTAD_UI_FPSCharacter* MainCharacter = Cast<AUTAD_UI_FPSCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (!MainCharacter)return ESkillUnlockResult::InvalidSkillData;
 
-	ESkillUnlockResult Result = CanSkillUnlocked(SkillData);
+	ESkillUnlockResult Result = CanSkillUnlocked(SkillData); //check if can unlock
 	if ( Result != ESkillUnlockResult::CanUnlock)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Cannot unlock skill: %d"), (uint8)Result);
 		return Result;
 	}
 	
-	int32& Level = SkillLevels.FindOrAdd(SkillData->SkillEffectData.SkillEffect);
-	Level++;
+	int32& Level = SkillLevels.FindOrAdd(SkillData->SkillEffectData.SkillEffect); //Update level
+	Level++; 
 	
 	MainCharacter->OnSkillUpdate.ExecuteIfBound(SkillData->SkillEffectData);
 	
-	MainCharacter->AddPoints(-SkillData->Cost);
+	MainCharacter->AddPoints(-SkillData->Cost); //Spend player points
 	
 	UE_LOG(LogTemp, Log, TEXT("Skill '%s' has been levelled up %d"), *SkillData->SkillName.ToString(), Level);
 	
@@ -61,7 +61,7 @@ ESkillUnlockResult USkillSubsystem::CanSkillUnlocked(UGenericSkillNodeData* Skil
 
 	const int32* CurrentLevelPtr = SkillLevels.Find(SkillData->SkillEffectData.SkillEffect);
 
-	// Skill no desbloqueada aún
+	// If skill is not unlocked
 	if (!CurrentLevelPtr)
 	{
 		return (SkillData->SkillEffectData.LevelEffect == 1) 

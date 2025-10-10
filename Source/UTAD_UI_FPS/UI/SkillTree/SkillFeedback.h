@@ -9,11 +9,15 @@
 class UBorder;
 class UTextBlock;
 
+/**
+ * Visual feedback system for the user when attempting/unlocking skills
+ */
 UCLASS()
 class UTAD_UI_FPS_API USkillFeedback : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	/**Set feedback messages for a period of time */
 	UFUNCTION(BlueprintCallable, Category = "SkillFeedback")
 	void SetFeedback(FText InText, float ShowTime);
 

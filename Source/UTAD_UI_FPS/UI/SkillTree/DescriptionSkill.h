@@ -8,6 +8,9 @@
 
 class UTextBlock;
 
+/**
+ * Display the skill description
+ */
 UCLASS()
 class UTAD_UI_FPS_API UDescriptionSkill : public UUserWidget
 {

@@ -26,7 +26,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category="Skill Tree")
 	float ShowFeedbackTime = 3.0f;
-
+	//Event which is called when the hold button event is called
 	UFUNCTION(BlueprintCallable, Category = "SkillTree")
 	void UpdateSkillTree();
 
@@ -48,7 +48,8 @@ protected:
 	USkillFeedback* Feedback;
 
 	virtual void NativeConstruct() override;
-
+	
+	//Add the skill clicked
 	UFUNCTION(BlueprintCallable, Category = "SkillTree")
 	void HandleSkillClicked(USkillNodeWidget* Node);
 	
