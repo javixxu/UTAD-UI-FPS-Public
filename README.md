@@ -13,15 +13,18 @@ Este proyecto implementa un sistema de árbol de habilidades interactivo desarro
 3. Mantén presionado el botón de actualización para procesar los cambios
 4. Observa la retroalimentación para cada intento de desbloqueo
 
+**Notas:**
+- El Jugador comienza con 250 puntos
+- Para conseguir mas puntos el jugador puede matar a las IAs que disparan
+  
 ### Para Desarrolladores
 1. Configura los datos de las habilidades usando Data Assets
 2. Implementa la lógica de requisitos y efectos de las habilidades
 3. Personaliza la interfaz visual según las necesidades del juego
 
-## Estructura del Sistema
-### Clases Principales
+## Clases Principales
 
-#### USkillTree
+### USkillTree
 Widget principal que gestiona todo el sistema de árbol de habilidades.
 
 **Funcionalidades**
@@ -29,7 +32,7 @@ Widget principal que gestiona todo el sistema de árbol de habilidades.
 - Actualizar dinámicamente la interfaz al modificar el estado de las habilidades.  
 - Proporcionar mensajes de retroalimentación visual y textual al usuario.
 
-#### USkillNodeWidget
+### USkillNodeWidget
 Widget que representa visualmente una habilidad individual en el árbol.
 
 **Componentes:**
@@ -51,10 +54,11 @@ Widget que representa visualmente una habilidad individual en el árbol.
 - Actualización automática de descripción
 - Sistema de selección/deselección
 
-#### UDescriptionSkill
+### UDescriptionSkill
 Widget que muestra la información detallada de una habilidad.
 
 **Componentes:**
+- `CostText`: Texto descriptivo del coste de la habilidad
 - `DescriptionText`: Texto descriptivo de la habilidad
 - `NameText`: Nombre de la habilidad
 
@@ -63,8 +67,8 @@ Widget que muestra la información detallada de una habilidad.
 - Actualización dinámica de contenido
 - Integración con datos de habilidad
 
-#### USkillFeedback
-Sistema de retroalimentación visual para el usuario.
+### USkillFeedback
+Sistema de retroalimentación visual para el usuario cuando intenta/desbloquea skills
 
 **Funcionalidades**
 - Mostrar mensajes de estado
@@ -72,7 +76,7 @@ Sistema de retroalimentación visual para el usuario.
 - Retroalimentación de acciones
 - Gestión de múltiples mensajes
 
-#### UHoldButtonWidget
+### UHoldButtonWidget
 Widget de botón que requiere mantener presionado para activar.
 
 **Componentes:**
@@ -84,7 +88,7 @@ Widget de botón que requiere mantener presionado para activar.
 - Retroalimentación visual de progreso
 - Dispara el evento cuando el jugador mantiene presionado el botón durante el tiempo requerido.
 
-#### USkillSubsystem
+### USkillSubsystem
 Subsistema que gestiona la lógica central del sistema de habilidades a nivel de GameInstance.
 
 **Estados de Desbloqueo**:
